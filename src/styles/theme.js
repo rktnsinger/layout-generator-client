@@ -1,8 +1,3 @@
-const fontSizes = {
-  title: "62px",
-  description: "24px",
-};
-
 const colors = {
   black: "#000000",
   white: "#ffffff",
@@ -11,7 +6,6 @@ const colors = {
 };
 
 const theme = {
-  fontSizes,
   colors,
 };
 

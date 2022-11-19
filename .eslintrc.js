@@ -23,10 +23,11 @@ module.exports = {
   rules: {
     semi: "warn",
     "no-unused-vars": "warn",
+    "no-restricted-exports": 0,
+    "no-plusplus": [2, { allowForLoopAfterthoughts: true }],
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/self-closing-comp": "off",
     "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
-    "no-restricted-exports": 0,
   },
 };
