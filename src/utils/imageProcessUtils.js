@@ -1,15 +1,17 @@
-const getCanvasSize = (image, maxWidth, maxHeight) => {
-  const width =
-    image.width > image.height
-      ? maxWidth
-      : (image.width * maxHeight) / image.height;
+import { MAX_CANVAS_SIZE } from "../constants";
 
-  const height =
-    image.width > image.height
-      ? (image.height * maxWidth) / image.width
-      : maxHeight;
+const fitToMaxCanvasSize = (width, height) => {
+  const canvasWidth =
+    width > height
+      ? MAX_CANVAS_SIZE.width
+      : (width * MAX_CANVAS_SIZE.height) / height;
 
-  return { width: Math.floor(width), height: Math.floor(height) };
+  const canvasHeight =
+    width > height
+      ? (height * MAX_CANVAS_SIZE.width) / width
+      : MAX_CANVAS_SIZE.height;
+
+  return { width: Math.floor(canvasWidth), height: Math.floor(canvasHeight) };
 };
 
-export default getCanvasSize;
+export default fitToMaxCanvasSize;
