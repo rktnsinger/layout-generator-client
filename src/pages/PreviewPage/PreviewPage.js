@@ -8,8 +8,11 @@ import MainOperationButton from "../../components/common/MainOperationButton";
 
 import { DEFAULT_WEIGHT } from "../../constants";
 
-export default function PreviewPage({ imageUrl }) {
-  const [weight, setWeight] = useState(DEFAULT_WEIGHT);
+export default function PreviewPage({
+  imageUrl,
+  initialState = DEFAULT_WEIGHT,
+}) {
+  const [weight, setWeight] = useState(initialState);
 
   return (
     <>
