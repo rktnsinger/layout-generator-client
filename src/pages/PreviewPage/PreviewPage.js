@@ -1,30 +1,45 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import Description from "../../components/common/Description";
 import Canvas from "../../components/Canvas";
-import SliderBar from "../../components/TrackBar/SliderBar";
+import SliderBar from "../../components/SliderBar";
+import Description from "../../components/common/Description";
 import MainOperationButton from "../../components/common/MainOperationButton";
+import ErrorPage from "../ErrorPage/ErrorPage";
+
+import { imageURLState } from "../../recoil/store";
 
 import { DEFAULT_WEIGHT } from "../../constants";
 
-export default function PreviewPage({
-  imageUrl,
-  initialState = DEFAULT_WEIGHT,
-}) {
-  const [weight, setWeight] = useState(initialState);
+export default function PreviewPage() {
+  const imageURL = useRecoilValue(imageURLState);
+  const [weight, setWeight] = useState(DEFAULT_WEIGHT);
+
+  const navigate = useNavigate();
+
+  const handleConfirmLines = () => {
+    navigate("/edit");
+  };
+
+  if (!imageURL) {
+    return <ErrorPage />;
+  }
 
   return (
     <>
-      <Description>Move slider to detect layout!</Description>
+      <Description>Move slider to detect lines!</Description>
       <CanvasWrapper>
-        <Canvas imageUrl={imageUrl} weight={weight} />
+        <Canvas weight={weight} />
       </CanvasWrapper>
       <SliderBarWrapper>
         <SliderBar value={weight} handleValue={setWeight} />
       </SliderBarWrapper>
       <ButtonWrapper>
-        <MainOperationButton>Confirm layout</MainOperationButton>
+        <MainOperationButton handleClick={() => handleConfirmLines("/edit")}>
+          Confirm lines
+        </MainOperationButton>
       </ButtonWrapper>
     </>
   );

@@ -1,9 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import cv from "@techstark/opencv-js";
 
+import {
+  imageURLState,
+  imageSizeState,
+  detectedLinesState,
+} from "../../recoil/store";
 import fitToMaxCanvasSize from "../../utils/imageProcessUtils";
 
-export default function Canvas({ imageUrl, weight, initialState = true }) {
+export default function Canvas({ weight, initialState = true }) {
+  const imageURL = useRecoilValue(imageURLState);
+  const setImageSize = useSetRecoilState(imageSizeState);
+  const setDetectedLines = useSetRecoilState(detectedLinesState);
   const [isInitialLoad, setIsInitialLoad] = useState(initialState);
   const [preProcessedData, setPreProcessedData] = useState(null);
 
@@ -12,13 +21,14 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const image = new Image();
-    image.src = imageUrl;
+    image.src = imageURL;
 
     image.onload = () => {
       const input = cv.imread(image);
       const rowLines = [];
       const columnLines = [];
       const { width, height } = fitToMaxCanvasSize(image.width, image.height);
+      setImageSize({ width: image.width, height: image.height });
 
       const preProcessingImage = () => {
         cv.cvtColor(input, input, cv.COLOR_RGB2GRAY, 0);
@@ -42,7 +52,6 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
           20
         );
 
-        // row와 column 구분
         for (let i = 0; i < lines.rows; i++) {
           const line = {
             startX: lines.data32S[i * 4],
@@ -52,14 +61,18 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
           };
 
           if (line.startY === line.endY) {
+            line.dividingPoint = line.startY;
             rowLines.push(line);
           } else {
+            line.dividingPoint = line.startX;
             columnLines.push(line);
           }
         }
 
-        rowLines.sort((a, b) => a.startY - b.startY);
-        columnLines.sort((a, b) => a.startX - b.startX);
+        rowLines.sort((a, b) => a.dividingPoint - b.dividingPoint);
+        columnLines.sort((a, b) => a.dividingPoint - b.dividingPoint);
+
+        setDetectedLines({ rowLines, columnLines });
 
         lines.delete();
       };
@@ -97,7 +110,14 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
         drawLines([...rowLines, ...columnLines]);
       }
     };
-  }, [isInitialLoad, preProcessedData, imageUrl, weight]);
+  }, [
+    isInitialLoad,
+    preProcessedData,
+    imageURL,
+    setImageSize,
+    setDetectedLines,
+    weight,
+  ]);
 
   return <canvas ref={canvasRef} />;
 }
