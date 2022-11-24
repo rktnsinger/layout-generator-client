@@ -13,9 +13,9 @@ export default function Loading({ children }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
   width: 100vw;
   height: 100vh;
+  z-index: 999;
   background-color: rgba(82, 78, 79, 0.5);
 `;
 

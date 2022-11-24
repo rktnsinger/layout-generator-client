@@ -1,21 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function MainOperationButton({ children }) {
-  return (
-    <Wrapper>
-      <Text>{children}</Text>
-    </Wrapper>
-  );
+export default function MainOperationButton({ children, handleClick }) {
+  return <Wrapper onClick={handleClick}>{children}</Wrapper>;
 }
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 340px;
   height: 90px;
   border-radius: 10px;
   background: ${({ theme }) => theme.colors.beige};
+  text-align: center;
+  font-size: 32px;
   color: ${({ theme }) => theme.colors.black};
   transition: all 0.5s ease;
   cursor: pointer;
@@ -25,9 +24,4 @@ const Wrapper = styled.div`
     color: ${({ theme }) => theme.colors.white};
     transition: all 0.5s ease;
   }
-`;
-
-const Text = styled.p`
-  align-self: center;
-  font-size: 32px;
 `;

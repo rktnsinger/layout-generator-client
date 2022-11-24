@@ -5,6 +5,18 @@ export const FRAME_TYPE = {
   height: "height",
 };
 
+export const DIVISION_TYPE = {
+  full: "full",
+  partial: "partial",
+};
+
+export const LAYOUT_TYPE = {
+  row: "row",
+  column: "column",
+  rowC: "complexedRow",
+  columnC: "complexedColumn",
+};
+
 export const DEFAULT_WEIGHT = 50;
 
 export const MAX_SIZE_MARGIN = 50;
