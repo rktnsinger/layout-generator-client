@@ -1,15 +1,37 @@
-export const ACCEPTED_FILE_TYPE = ".jpeg, .png, .tiff, .bmp";
+const ACCEPTED_FILE_TYPE = ".jpeg, .png, .tiff, .bmp";
 
-export const FRAME_TYPE = {
+const FRAME_TYPE = {
   width: "width",
   height: "height",
 };
 
-export const DEFAULT_WEIGHT = 50;
+const DIVISION_TYPE = {
+  full: "full",
+  partial: "partial",
+};
 
-export const MAX_SIZE_MARGIN = 50;
+const LAYOUT_TYPE = {
+  row: "row",
+  column: "column",
+  rowC: "complexedRow",
+  columnC: "complexedColumn",
+};
 
-export const MAX_CANVAS_SIZE = {
+const DEFAULT_WEIGHT = 50;
+
+const MAX_SIZE_MARGIN = 50;
+
+const MAX_CANVAS_SIZE = {
   width: 600,
   height: 600,
+};
+
+export {
+  ACCEPTED_FILE_TYPE,
+  FRAME_TYPE,
+  DIVISION_TYPE,
+  LAYOUT_TYPE,
+  DEFAULT_WEIGHT,
+  MAX_SIZE_MARGIN,
+  MAX_CANVAS_SIZE,
 };

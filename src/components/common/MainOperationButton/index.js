@@ -1,1 +1,3 @@
-export { default } from "./MainOperationButton";
+import MainOperationButton from "./MainOperationButton";
+
+export default MainOperationButton;

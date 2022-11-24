@@ -1,15 +1,23 @@
 import React from "react";
+import { useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MdDoubleArrow, MdAdd } from "react-icons/md";
 
 import MainOperationButton from "../../components/common/MainOperationButton";
 import Description from "../../components/common/Description";
 
+import { imageURLState } from "../../recoil/store";
+
 import { ACCEPTED_FILE_TYPE } from "../../constants";
 import webImage from "../../assets/images/mainpage-example-01.png";
 import layoutImage from "../../assets/images/mainpage-example-02.png";
 
-export default function MainPage({ handleImageUrl }) {
+export default function MainPage() {
+  const setImageURL = useSetRecoilState(imageURLState);
+
+  const navigate = useNavigate();
+
   const handleFileUpload = (event) => {
     event.preventDefault();
 
@@ -18,7 +26,8 @@ export default function MainPage({ handleImageUrl }) {
 
     reader.readAsDataURL(file);
     reader.onload = () => {
-      handleImageUrl(reader.result);
+      setImageURL(reader.result);
+      navigate("/preview");
     };
   };
 
@@ -40,16 +49,21 @@ export default function MainPage({ handleImageUrl }) {
         </TextWrapper>
       </SampleWrapper>
       <FileUploaderWrapper>
+        <Label htmlFor="file">
+          <MainOperationButton>Upload Image</MainOperationButton>
+        </Label>
         <FileInput
           type="file"
+          id="file"
           accept={ACCEPTED_FILE_TYPE}
           onChange={(event) => handleFileUpload(event)}
         />
-        <MainOperationButton>Upload Image</MainOperationButton>
       </FileUploaderWrapper>
     </>
   );
 }
+
+const Label = styled.label``;
 
 const Title = styled.h1`
   margin-top: 100px;
@@ -81,7 +95,7 @@ const TextWrapper = styled.div`
   white-space: pre-line;
 `;
 
-const FileUploaderWrapper = styled.label`
+const FileUploaderWrapper = styled.div`
   margin-top: 80px;
 `;
 

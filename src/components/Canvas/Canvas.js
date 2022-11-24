@@ -1,9 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import cv from "@techstark/opencv-js";
 
-import fitToMaxCanvasSize from "../../utils/imageProcessUtils";
+import {
+  imageURLState,
+  imageSizeState,
+  detectedLinesState,
+} from "../../recoil/store";
+import fitToMaxCanvasSize from "../../utils/fitToMaxCanvasSize";
 
-export default function Canvas({ imageUrl, weight, initialState = true }) {
+export default function Canvas({ weight, initialState = true }) {
+  const imageURL = useRecoilValue(imageURLState);
+  const setImageSize = useSetRecoilState(imageSizeState);
+  const setDetectedLines = useSetRecoilState(detectedLinesState);
+
   const [isInitialLoad, setIsInitialLoad] = useState(initialState);
   const [preProcessedData, setPreProcessedData] = useState(null);
 
@@ -12,13 +22,15 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const image = new Image();
-    image.src = imageUrl;
+    image.src = imageURL;
 
     image.onload = () => {
       const input = cv.imread(image);
       const rowLines = [];
       const columnLines = [];
       const { width, height } = fitToMaxCanvasSize(image.width, image.height);
+
+      setImageSize({ width: image.width, height: image.height });
 
       const preProcessingImage = () => {
         cv.cvtColor(input, input, cv.COLOR_RGB2GRAY, 0);
@@ -33,8 +45,8 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
         const minimumLineLength = Math.floor(input.cols * (weight / 100));
 
         cv.HoughLinesP(
-          preProcessedData, // image
-          lines, // Output vector of lines. 4-element vector (x1,y1,x2,y2)
+          preProcessedData,
+          lines,
           1,
           Math.PI / 180,
           2,
@@ -42,7 +54,6 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
           20
         );
 
-        // row와 column 구분
         for (let i = 0; i < lines.rows; i++) {
           const line = {
             startX: lines.data32S[i * 4],
@@ -60,6 +71,8 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
 
         rowLines.sort((a, b) => a.startY - b.startY);
         columnLines.sort((a, b) => a.startX - b.startX);
+
+        setDetectedLines({ rowLines, columnLines });
 
         lines.delete();
       };
@@ -97,7 +110,14 @@ export default function Canvas({ imageUrl, weight, initialState = true }) {
         drawLines([...rowLines, ...columnLines]);
       }
     };
-  }, [isInitialLoad, preProcessedData, imageUrl, weight]);
+  }, [
+    isInitialLoad,
+    preProcessedData,
+    imageURL,
+    setImageSize,
+    setDetectedLines,
+    weight,
+  ]);
 
   return <canvas ref={canvasRef} />;
 }

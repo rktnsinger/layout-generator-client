@@ -1,1 +1,3 @@
-export { default } from "./LayoutPreview";
+import LayoutPreview from "./LayoutPreview";
+
+export default LayoutPreview;
