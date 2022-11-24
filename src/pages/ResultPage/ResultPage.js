@@ -36,9 +36,9 @@ export default function ResultPage() {
 }
 
 const Code = styled.div`
+  width: 700px;
   margin-bottom: 80px;
   padding: 30px;
   background-color: lightgray;
-  width: 700px;
   white-space: pre-wrap;
 `;

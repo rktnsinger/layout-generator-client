@@ -7,12 +7,13 @@ import {
   imageSizeState,
   detectedLinesState,
 } from "../../recoil/store";
-import fitToMaxCanvasSize from "../../utils/imageProcessUtils";
+import fitToMaxCanvasSize from "../../utils/fitToMaxCanvasSize";
 
 export default function Canvas({ weight, initialState = true }) {
   const imageURL = useRecoilValue(imageURLState);
   const setImageSize = useSetRecoilState(imageSizeState);
   const setDetectedLines = useSetRecoilState(detectedLinesState);
+
   const [isInitialLoad, setIsInitialLoad] = useState(initialState);
   const [preProcessedData, setPreProcessedData] = useState(null);
 
@@ -28,6 +29,7 @@ export default function Canvas({ weight, initialState = true }) {
       const rowLines = [];
       const columnLines = [];
       const { width, height } = fitToMaxCanvasSize(image.width, image.height);
+
       setImageSize({ width: image.width, height: image.height });
 
       const preProcessingImage = () => {
@@ -43,8 +45,8 @@ export default function Canvas({ weight, initialState = true }) {
         const minimumLineLength = Math.floor(input.cols * (weight / 100));
 
         cv.HoughLinesP(
-          preProcessedData, // image
-          lines, // Output vector of lines. 4-element vector (x1,y1,x2,y2)
+          preProcessedData,
+          lines,
           1,
           Math.PI / 180,
           2,
@@ -61,16 +63,14 @@ export default function Canvas({ weight, initialState = true }) {
           };
 
           if (line.startY === line.endY) {
-            line.dividingPoint = line.startY;
             rowLines.push(line);
           } else {
-            line.dividingPoint = line.startX;
             columnLines.push(line);
           }
         }
 
-        rowLines.sort((a, b) => a.dividingPoint - b.dividingPoint);
-        columnLines.sort((a, b) => a.dividingPoint - b.dividingPoint);
+        rowLines.sort((a, b) => a.startY - b.startY);
+        columnLines.sort((a, b) => a.startX - b.startX);
 
         setDetectedLines({ rowLines, columnLines });
 

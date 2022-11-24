@@ -3,8 +3,9 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import LayoutPreview from "../../components/LayoutPreview/LayoutPreview";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import LayoutPreview from "../../components/LayoutPreview/LayoutPreview";
+import Description from "../../components/common/Description";
 import MainOperationButton from "../../components/common/MainOperationButton";
 
 import {
@@ -12,16 +13,14 @@ import {
   generatedCodeState,
   imageSizeState,
 } from "../../recoil/store";
-import fitToMaxCanvasSize from "../../utils/imageProcessUtils";
-import Description from "../../components/common/Description";
+import fitToMaxCanvasSize from "../../utils/fitToMaxCanvasSize";
 
-export default function ConfirmPage() {
+export default function EditPage() {
   const imageSize = useRecoilValue(imageSizeState);
   const detectedLines = useRecoilValue(detectedLinesState);
   const setGeneratedCode = useSetRecoilState(generatedCodeState);
 
   const previewRef = useRef();
-
   const navigate = useNavigate();
 
   const handleConfirmLayout = () => {

@@ -2,11 +2,8 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 
 import { detectedLinesState, imageSizeState } from "../../recoil/store";
-import {
-  getFractionString,
-  getLayoutType,
-  isInRange,
-} from "../../utils/layout";
+import { getFractionString, getLayoutType } from "../../utils/layoutUtils";
+import isInRange from "../../utils/isInRange";
 
 import { DIVISION_TYPE, LAYOUT_TYPE } from "../../constants";
 

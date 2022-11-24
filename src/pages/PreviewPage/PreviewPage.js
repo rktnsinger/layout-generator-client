@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import ErrorPage from "../ErrorPage/ErrorPage";
 import Canvas from "../../components/Canvas";
 import SliderBar from "../../components/SliderBar";
 import Description from "../../components/common/Description";
 import MainOperationButton from "../../components/common/MainOperationButton";
-import ErrorPage from "../ErrorPage/ErrorPage";
 
 import { imageURLState } from "../../recoil/store";
 
@@ -15,6 +15,7 @@ import { DEFAULT_WEIGHT } from "../../constants";
 
 export default function PreviewPage() {
   const imageURL = useRecoilValue(imageURLState);
+
   const [weight, setWeight] = useState(DEFAULT_WEIGHT);
 
   const navigate = useNavigate();

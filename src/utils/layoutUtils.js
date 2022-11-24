@@ -1,22 +1,12 @@
 import { LAYOUT_TYPE, MAX_SIZE_MARGIN } from "../constants";
 
-export const isInRange = (target, value, margin = 0) => {
-  return target >= value - margin && target <= value + margin;
-};
-
 const getDividingPoint = (line) => {
   const { startX, startY, endX } = line;
 
   return startX === endX ? startX : startY;
 };
 
-// const getIntersection = (line) => {
-//   const { startX, startY, endX } = line;
-
-//   return startX === endX ? startX : startY;
-// };
-
-export const getLayoutType = (rowLines, columnLines, width) => {
+const getLayoutType = (rowLines, columnLines, width) => {
   if (!columnLines.length) {
     return LAYOUT_TYPE.row;
   }
@@ -32,7 +22,7 @@ export const getLayoutType = (rowLines, columnLines, width) => {
   return matchedLineWithMaxWidth ? LAYOUT_TYPE.rowC : LAYOUT_TYPE.columnC;
 };
 
-export const getFractionString = (lines, length) => {
+const getFractionString = (lines, length) => {
   if (!lines.length) {
     return "";
   }
@@ -48,12 +38,4 @@ export const getFractionString = (lines, length) => {
   return fractionString;
 };
 
-// export const getLayoutDivisions = (
-//   layoutType,
-//   intersection,
-//   rowLines,
-//   columnLines
-// ) => {
-
-//   }
-// };
+export { getLayoutType, getFractionString };

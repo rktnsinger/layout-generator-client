@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { holy, holySize } from "../mockLayout";
 
 const imageURLState = atom({
   key: "imageURLState",
@@ -13,12 +12,12 @@ const layoutTypeState = atom({
 
 const imageSizeState = atom({
   key: "imageSizeState",
-  default: holySize,
+  default: {},
 });
 
 const detectedLinesState = atom({
   key: "detectedLines",
-  default: holy,
+  default: {},
 });
 
 const generatedCodeState = atom({
