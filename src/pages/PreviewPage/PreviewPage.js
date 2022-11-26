@@ -13,9 +13,10 @@ import { imageURLState } from "../../recoil/store";
 
 import { DEFAULT_WEIGHT } from "../../constants";
 
-export default function PreviewPage() {
+export default function PreviewPage({ initialState = DEFAULT_WEIGHT }) {
   const imageURL = useRecoilValue(imageURLState);
-  const [weight, setWeight] = useState(DEFAULT_WEIGHT);
+
+  const [weight, setWeight] = useState(initialState);
 
   const navigate = useNavigate();
 

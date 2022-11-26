@@ -12,8 +12,8 @@ import sortAndMergeLines from "../../utils/sortAndMergeLines";
 
 export default function Canvas({ weight }) {
   const imageURL = useRecoilValue(imageURLState);
-  const [imageSize, setImageSize] = useRecoilState(imageSizeState);
   const setDetectedLines = useSetRecoilState(detectedLinesState);
+  const [imageSize, setImageSize] = useRecoilState(imageSizeState);
 
   const [canvasSize, setCanvasSize] = useState({});
   const [preProcessedData, setPreProcessedData] = useState(null);
@@ -34,7 +34,6 @@ export default function Canvas({ weight }) {
 
         cv.cvtColor(input, input, cv.COLOR_RGB2GRAY, 0);
         cv.Canny(input, input, 25, 75, 3, false);
-        // cv.imshow(cannyCanvas, input);
 
         setPreProcessedData(input);
         setCanvasSize({ width, height });
@@ -49,7 +48,7 @@ export default function Canvas({ weight }) {
         cv.CV_8UC3
       );
       const lineColor = new cv.Scalar(255, 247, 53);
-      const fittedSize = new cv.Size(canvasSize.width, canvasSize.height);
+      const adjustedSize = new cv.Size(canvasSize.width, canvasSize.height);
       const minimumLineLength = Math.floor(
         preProcessedData.cols * (weight / 100)
       );
@@ -64,7 +63,7 @@ export default function Canvas({ weight }) {
         Math.PI / 180,
         2,
         minimumLineLength,
-        60
+        20
       );
 
       for (let i = 0; i < detectedLines.rows; i++) {
@@ -92,7 +91,7 @@ export default function Canvas({ weight }) {
         cv.line(linedOutput, startPoint, endPoint, lineColor, 5);
       });
 
-      cv.resize(linedOutput, output, fittedSize, 0, 0, cv.INTER_AREA);
+      cv.resize(linedOutput, output, adjustedSize, 0, 0, cv.INTER_AREA);
       cv.imshow(canvas, output);
 
       setDetectedLines({ rowLines, columnLines });

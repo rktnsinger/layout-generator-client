@@ -18,8 +18,7 @@ export default function LayoutPreview() {
   const gridTemplateColumns = getFractionString(columnLines, imageWidth);
 
   const divisions = [];
-  const { full, partial } = DIVISION_TYPE;
-  let currentDivision = full;
+  let currentDivision = DIVISION_TYPE.full;
   let currentLineIndex = 0;
   let intersection = 0;
   let intersectionIndex = 0;
@@ -57,11 +56,11 @@ export default function LayoutPreview() {
       while (divisions.length < rowLines.length + columnLines.length + 1) {
         intersection = columnLines[0].endY;
 
-        if (currentDivision === full) {
-          divisions.push(full);
+        if (currentDivision === DIVISION_TYPE.full) {
+          divisions.push(DIVISION_TYPE.full);
 
-          if (isInRange(rowLines[currentLineIndex].startY, intersection, 10)) {
-            currentDivision = partial;
+          if (isInRange(rowLines[currentLineIndex].startY, intersection, 20)) {
+            currentDivision = DIVISION_TYPE.partial;
             intersectionIndex = currentLineIndex;
             currentLineIndex = 0;
           } else {
@@ -69,14 +68,14 @@ export default function LayoutPreview() {
           }
         }
 
-        if (currentDivision === partial) {
+        if (currentDivision === DIVISION_TYPE.partial) {
           if (columnLines.length - 1 === currentLineIndex) {
-            divisions.push(partial, partial);
+            divisions.push(DIVISION_TYPE.partial, DIVISION_TYPE.partial);
 
-            currentDivision = full;
+            currentDivision = DIVISION_TYPE.full;
             currentLineIndex = intersectionIndex + 1;
           } else {
-            divisions.push(partial);
+            divisions.push(DIVISION_TYPE.partial);
 
             currentLineIndex += 1;
           }

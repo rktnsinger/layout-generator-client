@@ -21,7 +21,7 @@ const DEFAULT_WEIGHT = 50;
 
 const MAX_SIZE_MARGIN = 20;
 
-const LINE_MERGE_LIMIT = 50;
+const LINE_MERGE_LIMIT = 60;
 
 const MAX_CANVAS_SIZE = {
   width: 800,
