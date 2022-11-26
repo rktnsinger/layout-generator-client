@@ -27,6 +27,7 @@ export default function MainPage() {
     reader.readAsDataURL(file);
     reader.onload = () => {
       setImageURL(reader.result);
+
       navigate("/preview");
     };
   };

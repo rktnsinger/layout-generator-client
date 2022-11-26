@@ -16,12 +16,12 @@ const imageSizeState = atom({
 });
 
 const detectedLinesState = atom({
-  key: "detectedLines",
+  key: "detectedLinesState",
   default: {},
 });
 
 const generatedCodeState = atom({
-  key: "generatedCode",
+  key: "generatedCodeState",
   default: "",
 });
 

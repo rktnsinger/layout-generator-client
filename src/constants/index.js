@@ -1,8 +1,8 @@
 const ACCEPTED_FILE_TYPE = ".jpeg, .png, .tiff, .bmp";
 
-const FRAME_TYPE = {
-  width: "width",
-  height: "height",
+const LINE_TYPE = {
+  row: "row",
+  column: "column",
 };
 
 const DIVISION_TYPE = {
@@ -19,18 +19,21 @@ const LAYOUT_TYPE = {
 
 const DEFAULT_WEIGHT = 50;
 
-const MAX_SIZE_MARGIN = 50;
+const MAX_SIZE_MARGIN = 20;
+
+const LINE_MERGE_LIMIT = 60;
 
 const MAX_CANVAS_SIZE = {
-  width: 600,
-  height: 600,
+  width: 800,
+  height: 800,
 };
 
 export {
   ACCEPTED_FILE_TYPE,
-  FRAME_TYPE,
+  LINE_TYPE,
   DIVISION_TYPE,
   LAYOUT_TYPE,
+  LINE_MERGE_LIMIT,
   DEFAULT_WEIGHT,
   MAX_SIZE_MARGIN,
   MAX_CANVAS_SIZE,
