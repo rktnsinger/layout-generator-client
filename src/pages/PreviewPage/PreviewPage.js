@@ -15,7 +15,6 @@ import { DEFAULT_WEIGHT } from "../../constants";
 
 export default function PreviewPage() {
   const imageURL = useRecoilValue(imageURLState);
-
   const [weight, setWeight] = useState(DEFAULT_WEIGHT);
 
   const navigate = useNavigate();
