@@ -23,7 +23,7 @@
 
 ||
 |:-:|
-|3. "직선"의 성격을 가지면서 동시에 인자로 전달된 최소 길이 요건을 충족하는 연속된 행렬의 집합을 필터링한 뒤, 해당 데이터의 x,y축 각 끝부분의 점에 해당하는 좌표를 추출 (`startX, endX, startY, endY`). 이후 두 점을 연결하여 하나의 '직선 선분'으로 화면에 표시 (Probabilistic Hough Transform).|
+|3. 전처리된 이미지의 픽셀 중 "직선"의 성격을 가지며 일정 길이 이상인 데이터 집합을 필터링 한 후, 그 중 필요없는 선분을 다시 한 번 필터링한 뒤 화면에 표시 (Probabilistic Hough Transform).|
 | <img width="600" alt="ex-03-hough-transform" src="https://user-images.githubusercontent.com/96766719/204136735-f40c2151-f146-4d1f-be3c-5bae260c25cf.png">|
 |4. 인식된 선분의 좌표와 이미지의 너비, 높이를 기반으로 각 레이아웃 구획이 차지하는 비율을 계산한 후, 그 값을 이용하여 CSS `grid` 속성을 동적으로 생성(`string`). 마지막으로 이 `grid` 속성을 순차적으로 부여한 `<div>` 태그를 동적으로 생성하여 미리보기 렌더링 및 해당 코드를 사용자에게 전달.|
 |<img width="600" alt="ex-04-result" src="https://user-images.githubusercontent.com/96766719/204136741-a783a413-8c33-4e33-810f-ba0b00162449.png">|
