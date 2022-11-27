@@ -12,6 +12,19 @@
 
 > ___그저 레이아웃을 추출하고 싶은 이미지를 업로드 하고, 미리보기로 확인한 뒤, 생성된 코드를 복사하면 끝입니다!___
 
+  ### Deploy: [Layout generator](https://grand-granita-ccb492.netlify.app/)
+
+  ### Contents
+
+  - 🧐 [How it works](https://github.com/rktnsinger/layout-generator-client#-how-it-works)
+  - 🧗🏼‍♂️ [What I challenge about](https://github.com/rktnsinger/layout-generator-client#%EF%B8%8F-what-i-challenge-about)
+  - 📝 [Dev Log](https://github.com/rktnsinger/layout-generator-client#-dev-log)
+    - [Weekly work](https://github.com/rktnsinger/layout-generator-client#weekly-work-221107--221127)
+    - [What I realized & learned](https://github.com/rktnsinger/layout-generator-client#what-i-realized--learned)
+  - 💻 [More Description](https://github.com/rktnsinger/layout-generator-client#more-description)
+
+---
+
 <br/>
 
 ## 🧐 How it works
@@ -98,7 +111,7 @@
   - 엣지 케이스 확인에 따른 지속적인 로직 보완 작업
   - 전반적인 리팩토링, 코드 스타일 점검
   - 배포 이슈 해결(webpack config override)
-  - 리드미 및 테스트 코드 작성
+  - 리드미 작성
 
 </details>
 
@@ -134,7 +147,7 @@
 
 <br/>
 
-## More Description
+## 💻 More Description
 
 <details>
   <summary>Libraries & tools used</summary>
