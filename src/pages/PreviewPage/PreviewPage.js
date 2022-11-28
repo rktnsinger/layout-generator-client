@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { Navigate, useNavigate } from "react-router-dom";
 
-import ErrorPage from "../ErrorPage/ErrorPage";
+import SubPageLayout from "../SubPageLayout/SubPageLayout";
+import Loading from "../../components/common/Loading";
 import Canvas from "../../components/Canvas";
 import SliderBar from "../../components/SliderBar";
-import Description from "../../components/common/Description";
-import MainOperationButton from "../../components/common/MainOperationButton";
 
 import { imageURLState } from "../../recoil/store";
 
-import { DEFAULT_WEIGHT } from "../../constants";
+import {
+  DEFAULT_WEIGHT,
+  ERROR,
+  MAIN_BUTTON,
+  MESSAGE,
+  SUBTITLE,
+} from "../../constants";
 
-export default function PreviewPage({ initialState = DEFAULT_WEIGHT }) {
+export default function PreviewPage() {
   const imageURL = useRecoilValue(imageURLState);
 
-  const [weight, setWeight] = useState(initialState);
+  const [weight, setWeight] = useState(DEFAULT_WEIGHT);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -25,29 +30,18 @@ export default function PreviewPage({ initialState = DEFAULT_WEIGHT }) {
   };
 
   if (!imageURL) {
-    return <ErrorPage />;
+    return <Navigate to="/error" state={ERROR.noImage} />;
   }
 
   return (
-    <>
-      <Description>Move slider to detect lines!</Description>
-      <CanvasWrapper>
-        <Canvas weight={weight} />
-      </CanvasWrapper>
-      <SliderBarWrapper>
-        <SliderBar value={weight} handleValue={setWeight} />
-      </SliderBarWrapper>
-      <ButtonWrapper>
-        <MainOperationButton handleClick={() => handleConfirmLines("/edit")}>
-          Confirm lines
-        </MainOperationButton>
-      </ButtonWrapper>
-    </>
+    <SubPageLayout
+      subTitle={SUBTITLE.preview}
+      buttonText={MAIN_BUTTON.confirm}
+      handleButtonClick={handleConfirmLines}
+    >
+      {isLoading && <Loading>{MESSAGE.previewLoading}</Loading>}
+      <Canvas weight={weight} handleLoading={setIsLoading} />
+      <SliderBar value={weight} handleValue={setWeight} />
+    </SubPageLayout>
   );
 }
-
-const CanvasWrapper = styled.div``;
-
-const SliderBarWrapper = styled.div``;
-
-const ButtonWrapper = styled.div``;

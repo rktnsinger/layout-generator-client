@@ -6,6 +6,16 @@ const getDividingPoint = (line) => {
   return startX === endX ? startX : startY;
 };
 
+const isProperLineData = (rowLines, columnLines) => {
+  const invalidLine = [...rowLines, ...columnLines].find((line) => {
+    const { startX, endX, startY, endY } = line;
+
+    return startX !== endX && startY !== endY;
+  });
+
+  return !invalidLine;
+};
+
 const getLayoutType = (rowLines, columnLines, width) => {
   if (!columnLines.length) {
     return LAYOUT_TYPE.row;
@@ -19,7 +29,7 @@ const getLayoutType = (rowLines, columnLines, width) => {
     (row) => Math.abs(row.startX - row.endX) > width - MAX_SIZE_MARGIN
   );
 
-  return matchedLineWithMaxWidth ? LAYOUT_TYPE.rowC : LAYOUT_TYPE.columnC;
+  return matchedLineWithMaxWidth ? LAYOUT_TYPE.rowC : null;
 };
 
 const getFractionString = (lines, length) => {
@@ -38,4 +48,4 @@ const getFractionString = (lines, length) => {
   return fractionString;
 };
 
-export { getLayoutType, getFractionString };
+export { isProperLineData, getLayoutType, getFractionString };

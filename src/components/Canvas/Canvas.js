@@ -10,7 +10,7 @@ import {
 import fitToMaxCanvasSize from "../../utils/fitToMaxCanvasSize";
 import sortAndMergeLines from "../../utils/sortAndMergeLines";
 
-export default function Canvas({ weight }) {
+export default function Canvas({ weight, handleLoading }) {
   const imageURL = useRecoilValue(imageURLState);
   const setDetectedLines = useSetRecoilState(detectedLinesState);
   const [imageSize, setImageSize] = useRecoilState(imageSizeState);
@@ -38,6 +38,7 @@ export default function Canvas({ weight }) {
         setPreProcessedData(input);
         setCanvasSize({ width, height });
         setImageSize({ width: cols, height: rows });
+        handleLoading(false);
       };
     } else {
       const detectedLines = new cv.Mat();
@@ -105,9 +106,11 @@ export default function Canvas({ weight }) {
     imageSize,
     canvasSize,
     preProcessedData,
+    setCanvasSize,
     setImageSize,
     setDetectedLines,
     weight,
+    handleLoading,
   ]);
 
   return <canvas ref={canvasRef} />;
