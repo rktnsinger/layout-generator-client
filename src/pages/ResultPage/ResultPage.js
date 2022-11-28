@@ -1,9 +1,9 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import SubPageLayout from "../SubPageLayout/SubPageLayout";
+import SubPageLayout from "../SubPageLayout";
 
 import { generatedCodeState } from "../../recoil/store";
 import formatCode from "../../utils/formatCode";
@@ -20,6 +20,10 @@ export default function ResultPage() {
   const handleRedirectHome = () => {
     navigate("/", { replace: true });
   };
+
+  if (!generatedCode) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <SubPageLayout

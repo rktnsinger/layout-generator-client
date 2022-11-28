@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import SubPageLayout from "../SubPageLayout/SubPageLayout";
+import SubPageLayout from "../SubPageLayout";
 
 import { ERROR, MAIN_BUTTON, SUBTITLE } from "../../constants";
 

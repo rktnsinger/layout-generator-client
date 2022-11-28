@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Navigate, useNavigate } from "react-router-dom";
 
-import SubPageLayout from "../SubPageLayout/SubPageLayout";
+import SubPageLayout from "../SubPageLayout";
 import Loading from "../../components/common/Loading";
 import Canvas from "../../components/Canvas";
 import SliderBar from "../../components/SliderBar";
