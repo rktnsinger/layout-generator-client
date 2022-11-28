@@ -22,10 +22,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 22px;
 `;
 
-const InputWrapper = styled.div``;
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 420px;
+  margin-bottom: 20px;
+`;
 
 const StyledInput = styled.input`
-  width: 300px;
+  width: 280px;
 `;

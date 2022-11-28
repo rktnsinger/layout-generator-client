@@ -5,11 +5,6 @@ const imageURLState = atom({
   default: "",
 });
 
-const layoutTypeState = atom({
-  key: "layoutTypeState",
-  default: "",
-});
-
 const imageSizeState = atom({
   key: "imageSizeState",
   default: {},
@@ -28,7 +23,6 @@ const generatedCodeState = atom({
 export {
   imageURLState,
   imageSizeState,
-  layoutTypeState,
   detectedLinesState,
   generatedCodeState,
 };

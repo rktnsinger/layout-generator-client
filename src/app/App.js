@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 
 import GlobalStyle from "../styles/GlobalStyle";
 import MainPage from "../pages/MainPage";
@@ -15,22 +15,14 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/preview" element={<PreviewPage />} />
-          <Route path="/edit" element={<EditPage />} />
-          <Route path="/result" element={<ResultPage />} />
-          <Route path="/error" element={<ErrorPage />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/preview" element={<PreviewPage />} />
+        <Route path="/edit" element={<EditPage />} />
+        <Route path="/result" element={<ResultPage />} />
+        <Route path="/error" element={<ErrorPage />} />
+        <Route path="/*" element={<ErrorPage />} />
+      </Routes>
     </ThemeProvider>
   );
 }
-
-const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 6vh;
-`;

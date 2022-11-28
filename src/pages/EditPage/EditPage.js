@@ -3,21 +3,15 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import ErrorPage from "../ErrorPage/ErrorPage";
-import LayoutPreview from "../../components/LayoutPreview/LayoutPreview";
-import Description from "../../components/common/Description";
-import MainOperationButton from "../../components/common/MainOperationButton";
+import SubPageLayout from "../SubPageLayout";
+import LayoutPreview from "../../components/LayoutPreview";
 
-import {
-  detectedLinesState,
-  generatedCodeState,
-  imageSizeState,
-} from "../../recoil/store";
+import { generatedCodeState, imageSizeState } from "../../recoil/store";
 import fitToMaxCanvasSize from "../../utils/fitToMaxCanvasSize";
+import { MAIN_BUTTON, SUBTITLE } from "../../constants";
 
 export default function EditPage() {
   const imageSize = useRecoilValue(imageSizeState);
-  const detectedLines = useRecoilValue(detectedLinesState);
   const setGeneratedCode = useSetRecoilState(generatedCodeState);
 
   const previewRef = useRef();
@@ -26,31 +20,23 @@ export default function EditPage() {
   const handleConfirmLayout = () => {
     const { current } = previewRef;
 
-    if (!current) {
-      navigate("/error");
-    }
-
     setGeneratedCode(current?.innerHTML);
     navigate("/result");
   };
 
-  if (!detectedLines.rowLines) {
-    return <ErrorPage />;
-  }
-
   return (
-    <>
-      <Description>Expected layout as below!</Description>
+    <SubPageLayout
+      subTitle={SUBTITLE.edit}
+      buttonText={MAIN_BUTTON.generate}
+      handleButtonClick={handleConfirmLayout}
+    >
       <PreviewWrapper
         ref={previewRef}
         size={fitToMaxCanvasSize(imageSize.width, imageSize.height)}
       >
         <LayoutPreview />
       </PreviewWrapper>
-      <MainOperationButton handleClick={handleConfirmLayout}>
-        Generate code
-      </MainOperationButton>
-    </>
+    </SubPageLayout>
   );
 }
 

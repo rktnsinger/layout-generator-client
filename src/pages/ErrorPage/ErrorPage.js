@@ -1,21 +1,32 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-import MainOperationButton from "../../components/common/MainOperationButton";
+import SubPageLayout from "../SubPageLayout";
+
+import { ERROR, MAIN_BUTTON, SUBTITLE } from "../../constants";
 
 export default function ErrorPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const message = location.state;
 
   const handleRedirectHome = () => {
     navigate("/", { replace: true });
   };
 
   return (
-    <>
-      <h1>It seems like you approached in the wrong way..</h1>
-      <MainOperationButton handleClick={handleRedirectHome}>
-        Go to Home
-      </MainOperationButton>
-    </>
+    <SubPageLayout
+      subTitle={SUBTITLE.error}
+      buttonText={MAIN_BUTTON.goHome}
+      handleButtonClick={handleRedirectHome}
+    >
+      <Text>{`message: ${message || ERROR.notFound}`}</Text>
+    </SubPageLayout>
   );
 }
+
+const Text = styled.p`
+  font-size: 30px;
+`;

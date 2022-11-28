@@ -1,11 +1,17 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import { useRecoilValue } from "recoil";
+import { Navigate } from "react-router-dom";
 
 import { detectedLinesState, imageSizeState } from "../../recoil/store";
-import { getFractionString, getLayoutType } from "../../utils/layoutUtils";
+import {
+  getFractionString,
+  getLayoutType,
+  isProperLineData,
+} from "../../utils/layoutUtils";
 import isInRange from "../../utils/isInRange";
 
-import { DIVISION_TYPE, LAYOUT_TYPE } from "../../constants";
+import { DIVISION_TYPE, LAYOUT_TYPE, ERROR } from "../../constants";
 
 export default function LayoutPreview() {
   const imageSize = useRecoilValue(imageSizeState);
@@ -13,6 +19,12 @@ export default function LayoutPreview() {
 
   const { width: imageWidth, height: imageHeight } = imageSize;
   const { rowLines, columnLines } = detectedLines;
+  const isProperLine = isProperLineData(rowLines, columnLines);
+
+  if (!isProperLine) {
+    return <Navigate to="/error" state={ERROR.invalidLine} />;
+  }
+
   const layoutType = getLayoutType(rowLines, columnLines, imageWidth);
   const gridTemplateRows = getFractionString(rowLines, imageHeight);
   const gridTemplateColumns = getFractionString(columnLines, imageWidth);
@@ -33,7 +45,7 @@ export default function LayoutPreview() {
           }}
         >
           {Array.from({ length: rowLines.length + 1 }).map((item, index) => (
-            <div key={`${index * 1}`}>{index + 1}</div>
+            <div key={index}>{index + 1}</div>
           ))}
         </section>
       );
@@ -47,7 +59,7 @@ export default function LayoutPreview() {
           }}
         >
           {Array.from({ length: columnLines.length + 1 }).map((item, index) => (
-            <div key={`${index * 1}`}>{index + 1}</div>
+            <div key={index}>{index + 1}</div>
           ))}
         </section>
       );
@@ -93,19 +105,19 @@ export default function LayoutPreview() {
           {divisions.map((div, index) => {
             return div === DIVISION_TYPE.full ? (
               <div
-                key={`div${index * 1}`}
+                key={`${div}-${index}`}
                 style={{ gridColumn: `1 / ${columnLines.length + 2}` }}
               >
                 {index + 1}
               </div>
             ) : (
-              <div key={`div${index * 1}`}>{index + 1}</div>
+              <div key={`${div}-${index}`}>{index + 1}</div>
             );
           })}
         </section>
       );
 
     default:
-      return null;
+      return <Navigate to="/error" state={ERROR.notSupport} />;
   }
 }
