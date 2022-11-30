@@ -1,11 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
-export default function MainOperationButton({ children, handleClick }) {
-  return <Wrapper onClick={handleClick}>{children}</Wrapper>;
+export default function MainOperationButton({ type, text, handleClick }) {
+  return (
+    <Button type={type} onClick={handleClick}>
+      {text}
+    </Button>
+  );
 }
 
-const Wrapper = styled.div`
+const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,3 +30,13 @@ const Wrapper = styled.div`
     transition: all 0.5s ease;
   }
 `;
+
+MainOperationButton.propTypes = {
+  type: PropTypes.oneOf(["button", "submit", "reset"]),
+  text: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};
+
+MainOperationButton.defaultProps = {
+  type: "button",
+};
