@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 export default function SliderBar({ value, handleValue }) {
@@ -35,3 +36,8 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input`
   width: 280px;
 `;
+
+SliderBar.propTypes = {
+  value: PropTypes.number.isRequired,
+  handleValue: PropTypes.func.isRequired,
+};

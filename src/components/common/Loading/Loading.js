@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 
-export default function Loading({ children }) {
+export default function Loading({ text }) {
   return (
     <Container>
       <Spinner />
-      <Text>{children}</Text>
+      <Text>{text}</Text>
     </Container>
   );
 }
@@ -44,3 +45,11 @@ const Text = styled.p`
   font-weight: 700;
   text-shadow: 3px 3px 5px gray;
 `;
+
+Loading.propTypes = {
+  text: PropTypes.string,
+};
+
+Loading.defaultProps = {
+  text: "Loading...",
+};

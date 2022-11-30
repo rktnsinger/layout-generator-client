@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -20,7 +20,12 @@ import layoutImage from "../../assets/images/mainpage-example-02.png";
 export default function MainPage() {
   const setImageURL = useSetRecoilState(imageURLState);
 
+  const fileUploadRef = useRef();
   const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    fileUploadRef.current.click();
+  };
 
   const handleFileUpload = (event) => {
     event.preventDefault();
@@ -53,12 +58,13 @@ export default function MainPage() {
           <p>{"HTML\n&\nCSS"}</p>
         </TextWrapper>
       </SampleWrapper>
-      <Label htmlFor="file">
-        <MainOperationButton>{MAIN_BUTTON.upload}</MainOperationButton>
-      </Label>
+      <MainOperationButton
+        text={MAIN_BUTTON.upload}
+        handleClick={handleButtonClick}
+      />
       <FileInput
         type="file"
-        id="file"
+        ref={fileUploadRef}
         accept={ACCEPTED_FILE_TYPE}
         onChange={(event) => handleFileUpload(event)}
       />
@@ -72,8 +78,6 @@ const Container = styled.div`
   justify-items: center;
   margin-top: 15vh;
 `;
-
-const Label = styled.label``;
 
 const Title = styled.h1`
   font-size: 66px;

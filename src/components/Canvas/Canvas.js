@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import cv from "@techstark/opencv-js";
+import PropTypes from "prop-types";
 
 import {
   imageURLState,
@@ -115,3 +116,8 @@ export default function Canvas({ weight, handleLoading }) {
 
   return <canvas ref={canvasRef} />;
 }
+
+Canvas.propTypes = {
+  weight: PropTypes.number.isRequired,
+  handleLoading: PropTypes.func.isRequired,
+};

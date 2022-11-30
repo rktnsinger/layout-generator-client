@@ -39,7 +39,7 @@ export default function PreviewPage() {
       buttonText={MAIN_BUTTON.confirm}
       handleButtonClick={handleConfirmLines}
     >
-      {isLoading && <Loading>{MESSAGE.previewLoading}</Loading>}
+      {isLoading && <Loading text={MESSAGE.previewLoading} />}
       <Canvas weight={weight} handleLoading={setIsLoading} />
       <SliderBar value={weight} handleValue={setWeight} />
     </SubPageLayout>
