@@ -11,7 +11,12 @@ module.exports = {
     "airbnb/hooks",
     "plugin:prettier/recommended",
   ],
-  overrides: [],
+  overrides: [
+    {
+      files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      extends: ["plugin:testing-library/react"],
+    },
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
