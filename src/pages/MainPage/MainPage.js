@@ -8,12 +8,8 @@ import MainOperationButton from "../../components/common/MainOperationButton";
 
 import { imageURLState } from "../../recoil/store";
 
-import {
-  ACCEPTED_FILE_TYPE,
-  MAIN_BUTTON,
-  SUBTITLE,
-  TITLE,
-} from "../../constants";
+import { ACCEPTED_FILE_TYPE } from "../../constants";
+
 import webImage from "../../assets/images/mainpage-example-01.png";
 import layoutImage from "../../assets/images/mainpage-example-02.png";
 
@@ -43,8 +39,8 @@ export default function MainPage() {
 
   return (
     <Container>
-      <Title>{TITLE}</Title>
-      <Description>{SUBTITLE.main}</Description>
+      <Title>Layout Generator</Title>
+      <Description>Convert mockup image to HTML & CSS !</Description>
       <SampleWrapper>
         <StyledImage src={webImage} alt="mockup" />
         <IconWrapper>
@@ -59,7 +55,7 @@ export default function MainPage() {
         </TextWrapper>
       </SampleWrapper>
       <MainOperationButton
-        text={MAIN_BUTTON.upload}
+        text="Upload Image"
         handleClick={handleButtonClick}
       />
       <FileInput

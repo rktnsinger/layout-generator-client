@@ -9,13 +9,7 @@ import SliderBar from "../../components/SliderBar";
 
 import { imageURLState } from "../../recoil/store";
 
-import {
-  DEFAULT_WEIGHT,
-  ERROR,
-  MAIN_BUTTON,
-  MESSAGE,
-  SUBTITLE,
-} from "../../constants";
+import { DEFAULT_WEIGHT, ERROR } from "../../constants";
 
 export default function PreviewPage() {
   const imageURL = useRecoilValue(imageURLState);
@@ -35,11 +29,11 @@ export default function PreviewPage() {
 
   return (
     <SubPageLayout
-      subTitle={SUBTITLE.preview}
-      buttonText={MAIN_BUTTON.confirm}
+      subTitle="Move slider to detect lines!"
+      buttonText="Confirm lines"
       handleButtonClick={handleConfirmLines}
     >
-      {isLoading && <Loading text={MESSAGE.previewLoading} />}
+      {isLoading && <Loading text="Pre processing..." />}
       <Canvas weight={weight} handleLoading={setIsLoading} />
       <SliderBar value={weight} handleValue={setWeight} />
     </SubPageLayout>

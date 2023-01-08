@@ -4,12 +4,8 @@ import { useRecoilValue } from "recoil";
 import { Navigate } from "react-router-dom";
 
 import { detectedLinesState, imageSizeState } from "../../recoil/store";
-import {
-  getFractionString,
-  getLayoutType,
-  isProperLineData,
-} from "../../utils/layoutUtils";
-import isInRange from "../../utils/isInRange";
+import { getFractionString, getLayoutType } from "../../utils/layoutUtils";
+import checkIsInRange from "../../utils/checkIsInRange";
 
 import { DIVISION_TYPE, LAYOUT_TYPE, ERROR } from "../../constants";
 
@@ -19,11 +15,6 @@ export default function LayoutPreview() {
 
   const { width: imageWidth, height: imageHeight } = imageSize;
   const { rowLines, columnLines } = detectedLines;
-  const isProperLine = isProperLineData(rowLines, columnLines);
-
-  if (!isProperLine) {
-    return <Navigate to="/error" state={ERROR.invalidLine} />;
-  }
 
   const layoutType = getLayoutType(rowLines, columnLines, imageWidth);
   const gridTemplateRows = getFractionString(rowLines, imageHeight);
@@ -64,14 +55,16 @@ export default function LayoutPreview() {
         </section>
       );
 
-    case LAYOUT_TYPE.rowC:
+    case LAYOUT_TYPE.complexedRow:
       while (divisions.length < rowLines.length + columnLines.length + 1) {
         intersection = columnLines[0].endY;
 
         if (currentDivision === DIVISION_TYPE.full) {
           divisions.push(DIVISION_TYPE.full);
 
-          if (isInRange(rowLines[currentLineIndex].startY, intersection, 20)) {
+          if (
+            checkIsInRange(rowLines[currentLineIndex].startY, intersection, 20)
+          ) {
             currentDivision = DIVISION_TYPE.partial;
             intersectionIndex = currentLineIndex;
             currentLineIndex = 0;
@@ -105,13 +98,13 @@ export default function LayoutPreview() {
           {divisions.map((div, index) => {
             return div === DIVISION_TYPE.full ? (
               <div
-                key={`${div}-${index}`}
+                key={index}
                 style={{ gridColumn: `1 / ${columnLines.length + 2}` }}
               >
                 {index + 1}
               </div>
             ) : (
-              <div key={`${div}-${index}`}>{index + 1}</div>
+              <div key={index}>{index + 1}</div>
             );
           })}
         </section>
