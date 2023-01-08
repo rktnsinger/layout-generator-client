@@ -1,16 +1,22 @@
 import React, { useRef } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import SubPageLayout from "../SubPageLayout";
 import LayoutPreview from "../../components/LayoutPreview";
 
-import { generatedCodeState, imageSizeState } from "../../recoil/store";
+import {
+  generatedCodeState,
+  imageSizeState,
+  imageURLState,
+} from "../../recoil/store";
 import fitToMaxCanvasSize from "../../utils/fitToMaxCanvasSize";
-import { MAIN_BUTTON, SUBTITLE } from "../../constants";
+
+import { ERROR } from "../../constants";
 
 export default function EditPage() {
+  const imageURL = useRecoilValue(imageURLState);
   const imageSize = useRecoilValue(imageSizeState);
   const setGeneratedCode = useSetRecoilState(generatedCodeState);
 
@@ -24,10 +30,14 @@ export default function EditPage() {
     navigate("/result");
   };
 
+  if (!imageURL) {
+    return <Navigate to="/error" state={ERROR.badRequest} />;
+  }
+
   return (
     <SubPageLayout
-      subTitle={SUBTITLE.edit}
-      buttonText={MAIN_BUTTON.generate}
+      subTitle="Expected layout as below!"
+      buttonText="Generate code"
       handleButtonClick={handleConfirmLayout}
     >
       <PreviewWrapper

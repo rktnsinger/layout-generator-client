@@ -4,13 +4,13 @@ import styled from "styled-components";
 
 import SubPageLayout from "../SubPageLayout";
 
-import { ERROR, MAIN_BUTTON, SUBTITLE } from "../../constants";
+import { ERROR, MAIN_BUTTON } from "../../constants";
 
 export default function ErrorPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const message = location.state;
+  const { state } = location;
 
   const handleRedirectHome = () => {
     navigate("/", { replace: true });
@@ -18,11 +18,11 @@ export default function ErrorPage() {
 
   return (
     <SubPageLayout
-      subTitle={SUBTITLE.error}
+      subTitle="Something went wrong... please try again"
       buttonText={MAIN_BUTTON.goHome}
       handleButtonClick={handleRedirectHome}
     >
-      <Text>{`message: ${message || ERROR.notFound}`}</Text>
+      <Text>{`message: ${state || ERROR.notFound}`}</Text>
     </SubPageLayout>
   );
 }

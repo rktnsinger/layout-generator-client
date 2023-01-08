@@ -8,7 +8,7 @@ import SubPageLayout from "../SubPageLayout";
 import { generatedCodeState } from "../../recoil/store";
 import formatCode from "../../utils/formatCode";
 
-import { MAIN_BUTTON, SUBTITLE } from "../../constants";
+import { MAIN_BUTTON } from "../../constants";
 
 export default function ResultPage() {
   const generatedCode = useRecoilValue(generatedCodeState);
@@ -18,7 +18,7 @@ export default function ResultPage() {
   const formattedCode = formatCode(generatedCode);
 
   const handleRedirectHome = () => {
-    navigate("/", { replace: true });
+    navigate("/");
   };
 
   if (!generatedCode) {
@@ -27,7 +27,7 @@ export default function ResultPage() {
 
   return (
     <SubPageLayout
-      subTitle={SUBTITLE.result}
+      subTitle="All done! Enjoy your work!"
       buttonText={MAIN_BUTTON.goHome}
       handleButtonClick={handleRedirectHome}
     >

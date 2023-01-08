@@ -1,4 +1,4 @@
-import isInRange from "./isInRange";
+import checkIsInRange from "./checkIsInRange";
 
 import { LINE_MERGE_LIMIT, LINE_TYPE, MAX_SIZE_MARGIN } from "../constants";
 
@@ -22,8 +22,15 @@ const sortAndMergeLines = (lines, lineLength) => {
       return a.startX - b.startX;
     })
     .reduce((result, line, index, array) => {
-      const { startX, startY } = line;
+      const { startX, endX, startY, endY } = line;
       const currentPoint = lineType === LINE_TYPE.row ? startY : startX;
+
+      if (
+        (lineType === LINE_TYPE.row && startY !== endY) ||
+        (lineType === LINE_TYPE.column && startX !== endX)
+      ) {
+        return result;
+      }
 
       if (
         currentPoint < MAX_SIZE_MARGIN ||
@@ -43,7 +50,11 @@ const sortAndMergeLines = (lines, lineLength) => {
           ? array[index - 1].startY
           : array[index - 1].startX;
 
-      const isMergeable = isInRange(currentPoint, prevPoint, LINE_MERGE_LIMIT);
+      const isMergeable = checkIsInRange(
+        currentPoint,
+        prevPoint,
+        LINE_MERGE_LIMIT
+      );
 
       if (isMergeable) {
         return result;

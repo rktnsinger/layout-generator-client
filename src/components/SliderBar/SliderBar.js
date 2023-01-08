@@ -5,15 +5,15 @@ import styled from "styled-components";
 export default function SliderBar({ value, handleValue }) {
   return (
     <Container>
-      <p>Detected lines from image</p>
+      <p>Minimum line length to detect</p>
       <InputWrapper>
-        <span>Add</span>
+        <StyledSpan>Decrease</StyledSpan>
         <StyledInput
           type="range"
           value={value}
           onChange={(event) => handleValue(Number(event.target.value))}
         />
-        <span>Reduce</span>
+        <StyledSpan>Increase</StyledSpan>
       </InputWrapper>
     </Container>
   );
@@ -31,6 +31,10 @@ const InputWrapper = styled.div`
   justify-content: space-between;
   width: 420px;
   margin-bottom: 20px;
+`;
+
+const StyledSpan = styled.span`
+  padding: 10px;
 `;
 
 const StyledInput = styled.input`
